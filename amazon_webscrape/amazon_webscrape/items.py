@@ -6,7 +6,7 @@
 import scrapy
 
 
-class Post(scrapy.Item):
+class AmazonItem(scrapy.Item):
     # define the fields for your item here like:
     name = scrapy.Field()
     title = scrapy.Field()
