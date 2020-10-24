@@ -4,10 +4,13 @@ from  ..items import AmazonItem
 class AmazonSpider(scrapy.Spider):
     name = 'amazon'
     allowed_domains = ['amazon.co.jp']
-    start_urls = ['https://www.amazon.co.jp/']
+    start_urls = ['https://www.amazon.co.jp/dp/B00IMEA9CU#customerReviews']
 
     def parse(self, response):
         item_name = response.css(".product-title>h1.a-size-large>a.a-link-normal::text").get()
+        
+        
+
         for amazon_item in response.css(".review>.a-row>.celwidget"):
             yield AmazonItem(
                 name=post.css("span.a-profile-name::text").get(),
@@ -17,10 +20,14 @@ class AmazonSpider(scrapy.Spider):
                 quote_text = ','.join(post.css(".review-text-content>span::text").getall()),
                 item_name=item_name
             )
-            older_post_link = response.css("li.a-last>a::attr(href)").extract_first()
-            if older_post_link is None:
+            
+            next_page = response.css("li.a-last>a::attr(href)").extract_first()
+            if next_page is None:
                 return
                 
-            older_post_link = response.urljoin(older_post_link)
-            yield scrapy.Request(older_post_link, callback=self.parse)
+            next_page = response.urljoin(next_page)
+            yield scrapy.Request(next_page, callback=self.parse)
 
+
+
+#https://qiita.com/ritukiii/items/272d485e8a249d0d1bd7
