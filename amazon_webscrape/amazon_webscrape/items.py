@@ -8,10 +8,10 @@ import scrapy
 
 class AmazonItem(scrapy.Item):
     # define the fields for your item here like:
-    name = scrapy.Field()
     title = scrapy.Field()
-    star = scrapy.Field()
-    date = scrapy.Field()
-    quote_text = scrapy.Field()
-    item_name = scrapy.Field()
-    
+    thumbnail = scrapy.Field()
+    keyword = scrapy.Field()
+    detail_link = scrapy.Field()
+    page_count = scrapy.Field()
+    url = scrapy.Field()
+    timestamp = scrapy.Field()
